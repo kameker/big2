@@ -1,5 +1,5 @@
 import sys
-
+from requests import get
 from PyQt5 import QtGui
 from os import remove
 from PyQt5.QtCore import Qt
@@ -18,8 +18,19 @@ class Main(QMainWindow, Ui_Form):
         self.sputnik.clicked.connect(self.s_p)
         self.radioButton_2.clicked.connect(self.s_p)
         self.radioButton_3.clicked.connect(self.s_p)
+        self.search_button.clicked.connect(self.search)
         self.type_s_p = "map"
 
+    def search(self):
+        if self.search_text.toPlainText():
+            response = get(
+                f"http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={self.search_text.toPlainText()}1&format=json")
+            if response:
+                json_response = response.json()
+                xy = json_response["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]["Point"]["pos"].split()
+                print(xy)
+                self.y_text.setPlainText(xy[1])
+                self.x_text.setPlainText(xy[0])
     def show_fun(self):
         data = (str(self.x_text.toPlainText()), str(self.y_text.toPlainText()), str(self.scale_text.toPlainText()))
         show_image(data[0], data[1], (data[2], data[2]), self.type_s_p)
