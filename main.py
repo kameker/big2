@@ -17,6 +17,7 @@ class Main(QMainWindow, Ui_Form):
         self.show_button.clicked.connect(self.show_fun)
         self.sputnik.clicked.connect(self.s_p)
         self.radioButton_2.clicked.connect(self.s_p)
+        self.radioButton_3.clicked.connect(self.s_p)
         self.type_s_p = "map"
 
     def show_fun(self):
@@ -34,13 +35,11 @@ class Main(QMainWindow, Ui_Form):
                 self.scale_text.setPlainText(str(int(self.scale_text.toPlainText()) - 15))
             elif event.key() == Qt.Key_Up:
                 self.y_text.setPlainText(str(float(self.y_text.toPlainText()) + 0.1))
-                print(1)
             elif event.key() == Qt.Key_Down:
                 self.y_text.setPlainText(str(float(self.y_text.toPlainText()) - 0.1))
-            elif event.key() == Qt.Key_Up:
+            elif event.key() == Qt.Key_Right:
                 self.x_text.setPlainText(str(float(self.x_text.toPlainText()) + 0.1))
-                print(1)
-            elif event.key() == Qt.Key_Down:
+            elif event.key() == Qt.Key_Left:
                 self.x_text.setPlainText(str(float(self.x_text.toPlainText()) - 0.1))
         self.show_fun()
 
@@ -49,6 +48,8 @@ class Main(QMainWindow, Ui_Form):
             self.type_s_p = "sat"
         if self.radioButton_2.isChecked():
             self.type_s_p = "map"
+        if self.radioButton_3.isChecked():
+            self.type_s_p = "sat,skl"
         self.show_fun()
 
 
